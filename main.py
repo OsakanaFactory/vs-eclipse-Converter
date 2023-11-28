@@ -7,44 +7,38 @@ import os
 import shutil
 import subprocess
 import json
-import sys
-import os
 
 def check_eclipse_project(project_path):
-    # eclipseで作成されたJavaプロジェクトかどうかチェックする関数
-    # .classpathと.projectファイルが存在するかチェック
     if os.path.exists(project_path + "/.classpath") and os.path.exists(project_path + "/.project"):
-        # exlipseで作成されたプロジェクトの場合
-        log("\"" + project_path + "\"はEclipseで作成されたプロジェクトです。処理を開始します。")
+        print("\"" + project_path + "\"はEclipseで作成されたプロジェクトです。処理を開始します。")
         return True
     else:
-        log ("\"" + project_path + "\"はEclipseで作成されたプロジェクトではありません。")
+        print("\"" + project_path + "\"はEclipseで作成されたプロジェクトではありません。")
         return False
 
-
-# コマンドの設定をする関数
 def command():
-    # project_pathをグローバル変数として扱う
-    global project_path
-    # python main.py [project_path]で実行されたときの処理
+    if len(sys.argv) != 2:
+        print("Usage: python main.py [project_path]")
+        sys.exit(1)
     project_path = sys.argv[1]
     return project_path
 
 def log(text):
-    # ログに日時を追加して出力する関数
     date = subprocess.check_output("date", shell=True)
     print(date.decode("utf-8") + "::" + text)
 
-# vscode用のJavaプロジェクトに必要なファイルを追加する関数
-def add_vscode_file():
-    # project_pathに.vscodeフォルダが存在しない場合のみ作成
+def add_vscode_file(project_path):
     vscode_folder = project_path + "/.vscode"
     if not os.path.exists(vscode_folder):
         os.makedirs(vscode_folder)
-        log(vscode_folder + "に.vscodeフォルダを作成しました。")
-    
+        print(vscode_folder + "に.vscodeフォルダを作成しました.")
 
-check_eclipse_project(command())
+# コマンドライン引数からプロジェクトパスを取得
+project_path = command()
+
+# Eclipseプロジェクトである場合に.vscodeフォルダを追加
+if check_eclipse_project(project_path):
+    add_vscode_file(project_path)
 
 
 
