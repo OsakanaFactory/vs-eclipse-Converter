@@ -7,6 +7,8 @@ import os
 import shutil
 import subprocess
 import json
+import sys
+import os
 
 def check_eclipse_project(project_path):
     # eclipseで作成されたJavaプロジェクトかどうかチェックする関数
@@ -18,7 +20,7 @@ def check_eclipse_project(project_path):
     else:
         log ("\"" + project_path + "\"はEclipseで作成されたプロジェクトではありません。")
         return False
-        
+
 
 # コマンドの設定をする関数
 def command():
