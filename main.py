@@ -7,6 +7,7 @@ import os
 import shutil
 import subprocess
 import json
+import test
 
 def check_eclipse_project(project_path):
     # 指定されたプロジェクトパスがEclipseで作成されたプロジェクトかどうかをチェックする
@@ -44,7 +45,7 @@ project_path = command()
 if check_eclipse_project(project_path):
     add_vscode_file(project_path)
 
-
+test.test1()
 
  
 
