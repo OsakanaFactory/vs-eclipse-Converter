@@ -9,14 +9,16 @@ import subprocess
 import json
 
 def check_eclipse_project(project_path):
+    # 指定されたプロジェクトパスがEclipseで作成されたプロジェクトかどうかをチェックする
     if os.path.exists(project_path + "/.classpath") and os.path.exists(project_path + "/.project"):
-        print("\"" + project_path + "\"はEclipseで作成されたプロジェクトです。処理を開始します。")
+        print("\"" + project_path + "\"はEclipseで作成されたプロジェクトです。\n処理を開始します。")
         return True
     else:
         print("\"" + project_path + "\"はEclipseで作成されたプロジェクトではありません。")
         return False
 
 def command():
+    # コマンドライン引数からプロジェクトパスを取得する
     if len(sys.argv) != 2:
         print("Usage: python main.py [project_path]")
         sys.exit(1)
@@ -24,10 +26,12 @@ def command():
     return project_path
 
 def log(text):
+    # ログを出力する
     date = subprocess.check_output("date", shell=True)
     print(date.decode("utf-8") + "::" + text)
 
 def add_vscode_file(project_path):
+    # Eclipseプロジェクトに.vscodeフォルダを追加する
     vscode_folder = project_path + "/.vscode"
     if not os.path.exists(vscode_folder):
         os.makedirs(vscode_folder)
